@@ -24,7 +24,7 @@ const MovieSchema = new mongoose.Schema(
 
     price: {
       type: Number,
-      required: [true, "Price provide ticket price"]
+      required: [true, "Please provide ticket price"]
     }
     
   },
