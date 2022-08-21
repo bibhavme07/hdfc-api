@@ -28,7 +28,8 @@ const createMovie = async (req, res) => {
 };
 
 
-//
+// Here we will simply send the required data ie/ name(movie name), price, city, cinema.
+//We are not saving anything here in database because the only goal of this api endpoint is to only verified user can book the tickets or can access this endpoint.
 const bookMovie = (req, res, next) => {
 
   const bookMovieSchema = Joi.object({
