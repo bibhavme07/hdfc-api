@@ -31,7 +31,7 @@ Important file app.js: Open up app.js file and you can see all the imported modu
 
 # Using our hosted api
 # using auth api for sign-up and log-in
-1: User sign-up https://hdfc-api.herokuapp.com/api/auth/register
+1: User sign-up https://hdfc-api.herokuapp.com/api/v1/auth/register  : here api in the link is normal coding convention fors api's, v1 means version 1.
 -> {
   "name" : "example",
   "email" : "example@gmail.com",
@@ -39,7 +39,7 @@ Important file app.js: Open up app.js file and you can see all the imported modu
   "repeat_password" : "123456"
 }
 
-Hit the api after filling all the details (json format) on https://hdfc-api.herokuapp.com/api/auth/register using post method. In return you'll get the details as well as json web token according to user that will use latter. In backend i am encrypting user password and saving the user. If there is any error in the fields or some fields are missing it will msg of error details.
+Hit the api after filling all the details (json format) on https://hdfc-api.herokuapp.com/api/v1/auth/register using post method. In return you'll get the details as well as json web token according to user that will use latter. In backend i am encrypting user password and saving the user. If there is any error in the fields or some fields are missing it will msg of error details.
 
 
 2: User login https://hdfc-api.herokuapp.com/api/v1/auth/login
@@ -48,13 +48,44 @@ Hit the api after filling all the details (json format) on https://hdfc-api.hero
     "password" : "123456"
  }
  
-Logging in user on based of input data. In backend I am first finding the user on based of email, if user avaliable then decoding the password and comparing it and moving forward by returing the user and json web token or simply returing message of wrong credentials.
+Logging in user on based of input data. In backend I am first finding the user on based of email, if user avaliable then decoding the password and comparing it and moving forward by returning the user and json web token or simply returing message of wrong credentials.
 
 # Using movies api
 1: Get all movies
--> https://hdfc-api.herokuapp.com/api/v1/movies , here api in the link is normal coding convention fors api's, v1 means version 1.
+-> https://hdfc-api.herokuapp.com/api/v1/movies
 
-2: 
+2: Get all movies in particular city
+-> https://hdfc-api.herokuapp.com/api/v1/movies?city=mumbai : here we are fetching movies in a particular city ie mumbai by passing the query parameter city=mumbai
+
+3: Get particular movie in particular city
+-> https://hdfc-api.herokuapp.com/api/v1/movies?city=mumbai&movie=steve jobs : fetching steve jobs movie only in mumbai cinemas. Along with show times.
+
+4: Get particular cinema in particular city
+-> https://hdfc-api.herokuapp.com/api/v1/movies?city=mumbai&cinema=mumbai star : fetching "mumbai star" cinema only in mumbai. Along with show times.
+
+5: Get particular movie in particular city in particular cinema, Along with show times
+-> https://hdfc-api.herokuapp.com/api/v1/movies?city=mumbai&cinema=mumbai star&city=mumbai
+
+
+# booking movie tickets
+-> https://hdfc-api.herokuapp.com/api/v1/movies/book  //use post method
+
+This api can be only used by logged in user. Here the json web token comes into picture. When we login it returns a json web token copy that token and place in header section like : "Authorization": "Bearer YOUR_JSON_WEB_TOKEN". Yes, write Bearer then space then paste your jwt and key should be Authorization.
+ 
+ Here we will simply send the required data ie/ name(movie name), price, city, cinema. We are not saving anything here in database because the only goal of this api endpoint is to only verified user can book the tickets or can access this endpoint.
+ 
+data to send - {
+  "name" : "example",
+  "price" : 304,
+  "city" : "delhi",
+  "cinema" : "star zen"
+}
+
+if user is verified with jwt and required fields are met the response will be :
+-> {
+  "bookingStatus": "successful",
+  "msg": "Ticket of movie example booked in star zen, delhi at price 304"
+}
 
 
 
